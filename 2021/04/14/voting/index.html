@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, Hexo">
+    <meta name="keywords" content="集成学习-投票法, Hexo">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | Hexo</title>
+    <title>集成学习-投票法 | Hexo</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">集成学习-投票法</h1>
                 </div>
             </div>
         </div>
@@ -443,7 +443,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-09
+                    2021-04-14
                 </div>
                 
 
@@ -464,8 +464,23 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+                <h2 id="投票法的基本思路"><a href="#投票法的基本思路" class="headerlink" title="投票法的基本思路"></a>投票法的基本思路</h2><p>融合多个数据降低误差。  </p>
+<h2 id="投票法的原理分析"><a href="#投票法的原理分析" class="headerlink" title="投票法的原理分析"></a>投票法的原理分析</h2><p>投票法是一种遵循少数服从多数原则的集成学习模型，通过多个模型的集成降低方差，从而提高模型的鲁棒性。理想情况下，投票法的预测效果优于任何一个基模型的预测效果。<br>投票法在回归模型与分类模型上均可使用：  </p>
+<ul>
+<li>回归投票法：预测结果是所有模型预测结果的平均值。  </li>
+<li>分类投票法：预测结果是所有模型中出现最多的预测结果。</li>
+</ul>
+<p>分类投票法又可以划分为硬投票与软投票：  </p>
+<ul>
+<li>硬投票：预测结果是所有投票结果最多出现的类。</li>
+<li>软投票：预测结果是所有投票结果中出现概率加和最大的类。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">例子：  </span><br><span class="line"> 硬投票：对于某个样本 ，模型1的预测结果是A， 模型2的预测结果是B，模型3的预测结果是B。 硬投票法的预测结果是B。  </span><br><span class="line"> 软投票：model 1 类型A的概率是99%，model 2 类型A的概率是49%，model 3类型A的概率是49%。 A的预测概率的平均是（99+49+49）/3 = 65.67%。</span><br><span class="line"> 软投票考虑到预测概率这一额外信息，因此比硬投票法更加准确的预测结果。  </span><br></pre></td></tr></table></figure>
+在投票法中，需要考虑到不同的基模型可能产生的影响。理论上，基模型可以是任何已被训练好的模型，在实际应用上，想要投票法产生较好的结果，需要满足两个条件：  </li>
+<li>基模型之间的效果不能差别过大，当某个及模型相对于其他基模型效果过差时，该模型很可能成为噪声。</li>
+<li>基模型之间应该有较小的同质性， 例如在基模型预测效果近似的情况下，基于树模型与线性模型的投票，往往优于两个树模型或两个线性模型。</li>
+</ul>
+<p>当投票集合中使用的模型能预测出清晰的类别标签时，适合使用硬投票。<br>当投票集合使用的模型能预测类别的概率时，适合使用软投票。软投票同样可以用于那些本身并不预测类成员概率的模型，只要他们可以输出类似于概率的预测分数值（SVM，k-最近邻和决策树）</p>
+<h2 id="投票法案例"><a href="#投票法案例" class="headerlink" title="投票法案例"></a>投票法案例</h2><p>sklearn中两种投票方法 VotingRegressor和VotingClassifier两个投票方法。这两种模型的操作方式相同，并采用相同的参数，使用模型需要提供一个模型列表，列表中每个模型采用Tuple的结构表示，第一个元素代表名称，第二个元素代表模型，需要保证每个模型必须拥有唯一的名称。</p>
+<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
 <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
@@ -503,7 +518,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://jiaqiizhou.github.io/2021/04/09/hello-world/">http://jiaqiizhou.github.io/2021/04/09/hello-world/</a>
+                    <a href="http://jiaqiizhou.github.io/2021/04/14/voting/">http://jiaqiizhou.github.io/2021/04/14/voting/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -708,9 +723,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/04/14/voting/">
                     <div class="card-image">
@@ -728,9 +744,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-14
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-14
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -739,6 +755,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -746,7 +763,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2021/04/09/hello-world/">
@@ -776,7 +793,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>

@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>集成学习-投票法</title>
+      <link href="2021/04/14/voting/"/>
+      <url>2021/04/14/voting/</url>
+      
+        <content type="html"><![CDATA[<h2 id="投票法的基本思路"><a href="#投票法的基本思路" class="headerlink" title="投票法的基本思路"></a>投票法的基本思路</h2><p>融合多个数据降低误差。  </p><h2 id="投票法的原理分析"><a href="#投票法的原理分析" class="headerlink" title="投票法的原理分析"></a>投票法的原理分析</h2><p>投票法是一种遵循少数服从多数原则的集成学习模型，通过多个模型的集成降低方差，从而提高模型的鲁棒性。理想情况下，投票法的预测效果优于任何一个基模型的预测效果。<br>投票法在回归模型与分类模型上均可使用：  </p><ul><li>回归投票法：预测结果是所有模型预测结果的平均值。  </li><li>分类投票法：预测结果是所有模型中出现最多的预测结果。</li></ul><p>分类投票法又可以划分为硬投票与软投票：  </p><ul><li>硬投票：预测结果是所有投票结果最多出现的类。</li><li>软投票：预测结果是所有投票结果中出现概率加和最大的类。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">例子：  </span><br><span class="line"> 硬投票：对于某个样本 ，模型1的预测结果是A， 模型2的预测结果是B，模型3的预测结果是B。 硬投票法的预测结果是B。  </span><br><span class="line"> 软投票：model 1 类型A的概率是99%，model 2 类型A的概率是49%，model 3类型A的概率是49%。 A的预测概率的平均是（99+49+49）/3 = 65.67%。</span><br><span class="line"> 软投票考虑到预测概率这一额外信息，因此比硬投票法更加准确的预测结果。  </span><br></pre></td></tr></table></figure>在投票法中，需要考虑到不同的基模型可能产生的影响。理论上，基模型可以是任何已被训练好的模型，在实际应用上，想要投票法产生较好的结果，需要满足两个条件：  </li><li>基模型之间的效果不能差别过大，当某个及模型相对于其他基模型效果过差时，该模型很可能成为噪声。</li><li>基模型之间应该有较小的同质性， 例如在基模型预测效果近似的情况下，基于树模型与线性模型的投票，往往优于两个树模型或两个线性模型。</li></ul><p>当投票集合中使用的模型能预测出清晰的类别标签时，适合使用硬投票。<br>当投票集合使用的模型能预测类别的概率时，适合使用软投票。软投票同样可以用于那些本身并不预测类成员概率的模型，只要他们可以输出类似于概率的预测分数值（SVM，k-最近邻和决策树）</p><h2 id="投票法案例"><a href="#投票法案例" class="headerlink" title="投票法案例"></a>投票法案例</h2><p>sklearn中两种投票方法 VotingRegressor和VotingClassifier两个投票方法。这两种模型的操作方式相同，并采用相同的参数，使用模型需要提供一个模型列表，列表中每个模型采用Tuple的结构表示，第一个元素代表名称，第二个元素代表模型，需要保证每个模型必须拥有唯一的名称。</p><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="2021/04/09/hello-world/"/>
       <url>2021/04/09/hello-world/</url>
