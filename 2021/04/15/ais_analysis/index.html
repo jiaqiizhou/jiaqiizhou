@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="集成学习-投票法, WISEDOM, FREEDOM, RICH">
+    <meta name="keywords" content="智慧海洋-基础学习, WISEDOM, FREEDOM, RICH">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>集成学习-投票法 | jiaqi.z&#39;s Blogs</title>
+    <title>智慧海洋-基础学习 | jiaqi.z&#39;s Blogs</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -310,12 +310,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">集成学习-投票法</h1>
+                    <h1 class="description center-align post-title">智慧海洋-基础学习</h1>
                 </div>
             </div>
         </div>
@@ -443,7 +443,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-14
+                    2021-04-15
                 </div>
                 
 
@@ -467,89 +467,31 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="投票法的基本思路"><a href="#投票法的基本思路" class="headerlink" title="投票法的基本思路"></a>投票法的基本思路</h2><p>融合多个数据降低误差。  </p>
-<h2 id="投票法的原理分析"><a href="#投票法的原理分析" class="headerlink" title="投票法的原理分析"></a>投票法的原理分析</h2><p>投票法是一种遵循少数服从多数原则的集成学习模型，通过多个模型的集成降低方差，从而提高模型的鲁棒性。理想情况下，投票法的预测效果优于任何一个基模型的预测效果。<br>投票法在回归模型与分类模型上均可使用：  </p>
-<ul>
-<li>回归投票法：预测结果是所有模型预测结果的平均值。  </li>
-<li>分类投票法：预测结果是所有模型中出现最多的预测结果。</li>
+                <h2 id="常用空间数据计算与分析工具"><a href="#常用空间数据计算与分析工具" class="headerlink" title="常用空间数据计算与分析工具"></a>常用空间数据计算与分析工具</h2><ul>
+<li>shapely<ul>
+<li>空间数据模型</li>
+<li>几何对象的一些功能特性<br>Point，LineStrings，LineRings，Polygon</li>
+<li>几何对象之间的关系</li>
 </ul>
-<p>分类投票法又可以划分为硬投票与软投票：  </p>
-<ul>
-<li>硬投票：预测结果是所有投票结果最多出现的类。</li>
-<li>软投票：预测结果是所有投票结果中出现概率加和最大的类。</li>
+</li>
+<li>geopandas</li>
+<li>Folium</li>
+<li>Kepler.gl</li>
+<li>GeoHash</li>
 </ul>
-<p>例子：<br> 硬投票：对于某个样本 ，模型1的预测结果是A， 模型2的预测结果是B，模型3的预测结果是B。 硬投票法的预测结果是B。<br> 软投票：model 1 类型A的概率是99%，model 2 类型A的概率是49%，model 3类型A的概率是49%。 A的预测概率的平均是（99+49+49）/3 = 65.67%。<br> 软投票考虑到预测概率这一额外信息，因此比硬投票法更加准确的预测结果。  </p>
-<p>在投票法中，需要考虑到不同的基模型可能产生的影响。理论上，基模型可以是任何已被训练好的模型，在实际应用上，想要投票法产生较好的结果，需要满足两个条件：  </p>
+<h3 id="geohash"><a href="#geohash" class="headerlink" title="geohash"></a>geohash</h3><p>geohash基本原理是将地球理解为一个二维平面，将平面递归分解成更小的子块，每个子块在一定经纬度范围内拥有相同的编码。可以满足对小规模数据进行经纬度的检索。<br><img src="/2021/04/15/ais_analysis/earth_analysis.jpg" alt="地球">  </p>
 <ul>
-<li>基模型之间的效果不能差别过大，当某个及模型相对于其他基模型效果过差时，该模型很可能成为噪声。</li>
-<li>基模型之间应该有较小的同质性， 例如在基模型预测效果近似的情况下，基于树模型与线性模型的投票，往往优于两个树模型或两个线性模型。</li>
+<li>纬线：地球仪上的横线 ， lat， 赤道是最大的纬线，从赤道开始分为北纬和南纬，都是0-90°，纬线是角度数值，不是米。</li>
+<li>经线：地球仪上的竖线，lon，子午线是0°，分为西经和东经，都是0-180°，经线也是角度数值。</li>
+<li>将地球看成一个基于经纬度线的坐标系。纬线就是平行于赤道平面的那些平面的周线，经线就是连接南北两极的大园线的半圆弧。纬度分为北纬（正），南纬（负），赤道所在的纬度值为0，经度以本初子午线界（本初子午线经度为0），分为东经（正），西经（负）。lat范围[-90°，0°)，(0°，90°],纬度范围表示为[-180°，0°），（0°，180°]。  </li>
 </ul>
-<p>当投票集合中使用的模型能预测出清晰的类别标签时，适合使用硬投票。<br>当投票集合使用的模型能预测类别的概率时，适合使用软投票。软投票同样可以用于那些本身并不预测类成员概率的模型，只要他们可以输出类似于概率的预测分数值（SVM，k-最近邻和决策树）</p>
-<h2 id="投票法案例"><a href="#投票法案例" class="headerlink" title="投票法案例"></a>投票法案例</h2><p>sklearn中两种投票方法 VotingRegressor和VotingClassifier两个投票方法。这两种模型的操作方式相同，并采用相同的参数，使用模型需要提供一个模型列表，列表中每个模型采用Tuple的结构表示，第一个元素代表名称，第二个元素代表模型，需要保证每个模型必须拥有唯一的名称。</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>linear_model <span class="token keyword">import</span> LogisticRegression
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>svm <span class="token keyword">import</span> SVC
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>ensemble <span class="token keyword">import</span> VotingClassifier
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>pipeline <span class="token keyword">import</span> make_pipeline
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>preprocessing <span class="token keyword">import</span> StandardScaler
-
-<span class="token comment"># 创建1000个样本，20个特征的随机数据集</span>
-<span class="token comment"># test classification dataset</span>
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>datasets <span class="token keyword">import</span> make_classification
-<span class="token comment"># define dataset</span>
-<span class="token keyword">def</span> <span class="token function">get_dataset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    X<span class="token punctuation">,</span> y <span class="token operator">=</span> make_classification<span class="token punctuation">(</span>n_samples <span class="token operator">=</span> <span class="token number">1000</span><span class="token punctuation">,</span> n_features <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">,</span> n_informative <span class="token operator">=</span> <span class="token number">15</span><span class="token punctuation">,</span> n_redundant<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> random_state <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">)</span>
-    <span class="token comment"># summarize the dataset</span>
-    <span class="token keyword">return</span> X<span class="token punctuation">,</span>y
-X<span class="token punctuation">,</span>y <span class="token operator">=</span> get_dataset<span class="token punctuation">(</span><span class="token punctuation">)</span> 
-
-<span class="token comment"># 使用多个KNN模型作为基模型演示投票法，其中每个模型采用不同邻居值K参数：</span>
-<span class="token comment"># get a voting ensemble of models</span>
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>neighbors <span class="token keyword">import</span> KNeighborsClassifier
-<span class="token keyword">def</span> <span class="token function">get_voting</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment"># define the base models</span>
-    models <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    models<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">'knn1'</span><span class="token punctuation">,</span> KNeighborsClassifier<span class="token punctuation">(</span>n_neighbors <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    models<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">'knn3'</span><span class="token punctuation">,</span> KNeighborsClassifier<span class="token punctuation">(</span>n_neighbors <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    models<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">'knn5'</span><span class="token punctuation">,</span> KNeighborsClassifier<span class="token punctuation">(</span>n_neighbors <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    models<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">'knn7'</span><span class="token punctuation">,</span> KNeighborsClassifier<span class="token punctuation">(</span>n_neighbors <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    models<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token string">'knn9'</span><span class="token punctuation">,</span> KNeighborsClassifier<span class="token punctuation">(</span>n_neighbors <span class="token operator">=</span> <span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token comment"># define the voting ensemble</span>
-    ensemble <span class="token operator">=</span> VotingClassifier<span class="token punctuation">(</span>estimators <span class="token operator">=</span> models<span class="token punctuation">,</span> voting <span class="token operator">=</span> <span class="token string">"hard"</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> ensemble
-
-<span class="token comment"># 创建模型列表，包括每个基模型和硬投票模型</span>
-<span class="token comment"># get a list of models to evaluate</span>
-<span class="token keyword">def</span> <span class="token function">get_models</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    models <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    models<span class="token punctuation">[</span><span class="token string">'knn1'</span><span class="token punctuation">]</span> <span class="token operator">=</span> KNeighborsClassifier<span class="token punctuation">(</span>n_neighbors <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span>
-    models<span class="token punctuation">[</span><span class="token string">'knn3'</span><span class="token punctuation">]</span> <span class="token operator">=</span> KNeighborsClassifier<span class="token punctuation">(</span>n_neighbors <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">)</span>
-    models<span class="token punctuation">[</span><span class="token string">'knn5'</span><span class="token punctuation">]</span> <span class="token operator">=</span> KNeighborsClassifier<span class="token punctuation">(</span>n_neighbors <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">)</span>
-    models<span class="token punctuation">[</span><span class="token string">'knn7'</span><span class="token punctuation">]</span> <span class="token operator">=</span> KNeighborsClassifier<span class="token punctuation">(</span>n_neighbors <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">)</span>
-    models<span class="token punctuation">[</span><span class="token string">'knn9'</span><span class="token punctuation">]</span> <span class="token operator">=</span> KNeighborsClassifier<span class="token punctuation">(</span>n_neighbors <span class="token operator">=</span> <span class="token number">9</span><span class="token punctuation">)</span>
-    models<span class="token punctuation">[</span><span class="token string">'hard_voting'</span><span class="token punctuation">]</span> <span class="token operator">=</span> get_voting<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> models
-
-<span class="token comment"># evaluate a give model using cross_valiation</span>
-<span class="token comment"># 分层10倍交叉验证三次重复的分数列表的形式返回</span>
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span>  RepeatedStratifiedKFold
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span> cross_val_score
-<span class="token keyword">def</span> <span class="token function">evaluate_model</span><span class="token punctuation">(</span>model<span class="token punctuation">,</span>X<span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    cv <span class="token operator">=</span> RepeatedStratifiedKFold<span class="token punctuation">(</span>n_splits <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span> n_repeats <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span> random_state <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span>
-    scores <span class="token operator">=</span> cross_val_score<span class="token punctuation">(</span>model<span class="token punctuation">,</span> X<span class="token punctuation">,</span> y <span class="token punctuation">,</span>scoring <span class="token operator">=</span> <span class="token string">"accuracy"</span><span class="token punctuation">,</span> cv <span class="token operator">=</span> cv<span class="token punctuation">,</span> n_jobs <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> error_score <span class="token operator">=</span> <span class="token string">"raise"</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> scores
-
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-models <span class="token operator">=</span> get_models<span class="token punctuation">(</span><span class="token punctuation">)</span>
-results<span class="token punctuation">,</span> names <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">for</span> name<span class="token punctuation">,</span> model <span class="token keyword">in</span> models<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    scores <span class="token operator">=</span> evaluate_model<span class="token punctuation">(</span>model<span class="token punctuation">,</span>X<span class="token punctuation">,</span>y<span class="token punctuation">)</span>
-    results<span class="token punctuation">.</span>append<span class="token punctuation">(</span>scores<span class="token punctuation">)</span>
-    names<span class="token punctuation">.</span>append<span class="token punctuation">(</span>name<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">">%s %.3f (%.3f)"</span><span class="token operator">%</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> np<span class="token punctuation">.</span>mean<span class="token punctuation">(</span>scores<span class="token punctuation">)</span><span class="token punctuation">,</span> np<span class="token punctuation">.</span>std<span class="token punctuation">(</span>scores<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">from</span> matplotlib <span class="token keyword">import</span> pyplot
-pyplot<span class="token punctuation">.</span>boxplot<span class="token punctuation">(</span>results<span class="token punctuation">,</span> labels <span class="token operator">=</span> names<span class="token punctuation">,</span> showmeans <span class="token operator">=</span> <span class="token boolean">True</span><span class="token punctuation">)</span>
-pyplot<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/2021/04/14/voting/voting_result.jpg" alt="输出结果"></p>
+<p><img src="/2021/04/15/ais_analysis/%E4%BA%8C%E4%BD%8D%E5%9D%90%E6%A0%87.jpg" alt="二维坐标"> </p>
+<p>GeoHash将二维的经纬度转换成字符串，比如下图展示了北京9个区域的GeoHash字符串，分别是WX4ER，WX4G2、WX4G3等等，每一个字符串代表了某一矩形区域。也就是说，这个矩形区域内所有的点（经纬度坐标）都共享相同的GeoHash字符串，这样既可以保护隐私（只表示大概区域位置而不是具体的点），又比较容易做缓存。</p>
+<ul>
+<li>不同的编码长度，表示不同的范围区间，字符串越长，表示的范围越精确。</li>
+<li>字符串相似的表示距离相近（特殊情况后文阐述），这样可以利用字符串的前缀匹配来查询附近的POI信息。如下两个图所示，一个在城区，一个在郊区，城区的GeoHash字符串之间比较相似，郊区的字符串之间也比较相似，而城区和郊区的GeoHash字符串相似程度要低些。  </li>
+</ul>
+<p>GeoHash就是一种将经纬度转换成字符串的方法，并且使得在大部分情况下，字符串前缀匹配越多的距离越近</p>
 
                 
             </div>
@@ -576,7 +518,7 @@ pyplot<span class="token punctuation">.</span>show<span class="token punctuation
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://jiaqiizhou.github.io/2021/04/14/voting/">http://jiaqiizhou.github.io/2021/04/14/voting/</a>
+                    <a href="http://jiaqiizhou.github.io/2021/04/15/ais_analysis/">http://jiaqiizhou.github.io/2021/04/15/ais_analysis/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -781,9 +723,10 @@ pyplot<span class="token punctuation">.</span>show<span class="token punctuation
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/04/15/ais_analysis/">
                     <div class="card-image">
@@ -801,9 +744,9 @@ pyplot<span class="token punctuation">.</span>show<span class="token punctuation
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-15
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-15
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -812,6 +755,7 @@ pyplot<span class="token punctuation">.</span>show<span class="token punctuation
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -822,13 +766,13 @@ pyplot<span class="token punctuation">.</span>show<span class="token punctuation
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/04/09/hello-world/">
+                <a href="/2021/04/14/voting/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="集成学习-投票法">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">集成学习-投票法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -839,7 +783,7 @@ pyplot<span class="token punctuation">.</span>show<span class="token punctuation
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-14
                             </span>
                         <span class="publish-author">
                             
