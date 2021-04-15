@@ -479,7 +479,7 @@
 <li>Kepler.gl</li>
 <li>GeoHash</li>
 </ul>
-<h3 id="geohash"><a href="#geohash" class="headerlink" title="geohash"></a>geohash</h3><p>geohash基本原理是将地球理解为一个二维平面，将平面递归分解成更小的子块，每个子块在一定经纬度范围内拥有相同的编码。可以满足对小规模数据进行经纬度的检索。<br><img src="/2021/04/15/ais_analysis/earth_analysis.jpg" alt="地球">  </p>
+<h3 id="geohash"><a href="#geohash" class="headerlink" title="geohash"></a>geohash</h3><p>geohash基本原理是将地球理解为一个二维平面，将平面递归分解成更小的子块，每个子块在一定经纬度范围内拥有相同的编码。可以满足对小规模数据进行经纬度的检索。<br><img src="/2021/04/15/ais_analysis/earth.jpg" alt="地球">  </p>
 <ul>
 <li>纬线：地球仪上的横线 ， lat， 赤道是最大的纬线，从赤道开始分为北纬和南纬，都是0-90°，纬线是角度数值，不是米。</li>
 <li>经线：地球仪上的竖线，lon，子午线是0°，分为西经和东经，都是0-180°，经线也是角度数值。</li>
@@ -492,7 +492,7 @@
 <li>字符串相似的表示距离相近（特殊情况后文阐述），这样可以利用字符串的前缀匹配来查询附近的POI信息。如下两个图所示，一个在城区，一个在郊区，城区的GeoHash字符串之间比较相似，郊区的字符串之间也比较相似，而城区和郊区的GeoHash字符串相似程度要低些。  </li>
 </ul>
 <p>GeoHash就是一种将经纬度转换成字符串的方法，并且使得在大部分情况下，字符串前缀匹配越多的距离越近</p>
-
+<h2 id="基于kepler-gl可视化不同类型的船舶数据"><a href="#基于kepler-gl可视化不同类型的船舶数据" class="headerlink" title="基于kepler.gl可视化不同类型的船舶数据"></a>基于kepler.gl可视化不同类型的船舶数据</h2><h2 id="douglas-peucker算法识别关键数据点"><a href="#douglas-peucker算法识别关键数据点" class="headerlink" title="douglas-peucker算法识别关键数据点"></a>douglas-peucker算法识别关键数据点</h2>
                 
             </div>
             <hr/>
