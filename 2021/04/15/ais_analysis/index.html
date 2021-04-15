@@ -29,7 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head>
 
 
 
@@ -439,8 +441,8 @@
                                 <span class="chip bg-color">AIS</span>
                             </a>
                         
-                            <a href="/tags/geopandas/">
-                                <span class="chip bg-color">geopandas</span>
+                            <a href="/tags/GeoPandas/">
+                                <span class="chip bg-color">GeoPandas</span>
                             </a>
                         
                     </div>
@@ -576,8 +578,8 @@
                                     <span class="chip bg-color">AIS</span>
                                 </a>
                             
-                                <a href="/tags/geopandas/">
-                                    <span class="chip bg-color">geopandas</span>
+                                <a href="/tags/GeoPandas/">
+                                    <span class="chip bg-color">GeoPandas</span>
                                 </a>
                             
                         </div>
@@ -791,8 +793,8 @@
                         <span class="chip bg-color">AIS</span>
                     </a>
                     
-                    <a href="/tags/geopandas/">
-                        <span class="chip bg-color">geopandas</span>
+                    <a href="/tags/GeoPandas/">
+                        <span class="chip bg-color">GeoPandas</span>
                     </a>
                     
                 </div>
@@ -834,6 +836,18 @@
                     </div>
                 </div>
                 
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/DataWhale/">
+                        <span class="chip bg-color">DataWhale</span>
+                    </a>
+                    
+                    <a href="/tags/ensemble/">
+                        <span class="chip bg-color">ensemble</span>
+                    </a>
+                    
+                </div>
+                
             </div>
         </div>
         
@@ -842,6 +856,43 @@
 
 </div>
 
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: jiaqi.z&#39;s Blogs<br />'
+            + '文章作者: Jiaqi Zhou<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
 
 
 <!-- 代码块功能依赖 -->
