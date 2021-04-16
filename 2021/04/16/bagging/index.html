@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Zhou Jiaqi, WISEDOM, FREEDOM, RICH">
+    <meta name="keywords" content="集成学习-bagging, WISEDOM, FREEDOM, RICH">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Zhou Jiaqi | jiaqi.z&#39;s Blogs</title>
+    <title>集成学习-bagging | jiaqi.z&#39;s Blogs</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -312,12 +312,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Zhou Jiaqi</h1>
+                    <h1 class="description center-align post-title">集成学习-bagging</h1>
                 </div>
             </div>
         </div>
@@ -433,8 +433,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/JIAQI-ZHOU/">
-                                <span class="chip bg-color">JIAQI ZHOU</span>
+                            <a href="/tags/DataWhale/">
+                                <span class="chip bg-color">DataWhale</span>
+                            </a>
+                        
+                            <a href="/tags/ensemble/">
+                                <span class="chip bg-color">ensemble</span>
                             </a>
                         
                     </div>
@@ -449,7 +453,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-09
+                    2021-04-16
                 </div>
                 
 
@@ -473,46 +477,16 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to Jiaqi’s World</p>
-<p><strong><font face="微软雅黑" color="#FF9900"> EDUCATION </font></strong>  </p>
-<ul>
-<li>Beijing Institute of Technology (985), Sep.2016-Jun.2019<ul>
-<li>Master in Computer Science and Technology , GPA 3.4/4.0</li>
-<li>2019 Beijing outstanding graduates, </li>
-<li>2016-2018 School-based professional for a scholarship</li>
+                <p>与投票法不同，Bagging不仅仅集成模型最后的预测结果，同时采用一定策略来影响基模型训练，保证基模型可以服从一定的假设。集成学习我们希望各个模型之间具有较大的差异性，而在实际操作中的模型往往是同质的，因此一个简单的思路是通过不同的采样增加模型的差异性。</p>
+<h2 id="bagging的原理分析"><a href="#bagging的原理分析" class="headerlink" title="bagging的原理分析"></a>bagging的原理分析</h2><p>bagging的核心在于<font color="red">自主采样（bootstrap）</font>，即有放回的从数据集中进行采样，也就是说，同样一个样本可能被多次进行采样。一个自主采样的例子是希望估计全国所有人口年龄的平均值，那么我们在全国所有人口中随机抽取不同的集合（这些集合可能存在交集），计算每个集合的平均值，然后将所有平均值的均值作为估计值。</p>
+<h3 id="bagging的基本流程"><a href="#bagging的基本流程" class="headerlink" title="bagging的基本流程"></a>bagging的基本流程</h3><ul>
+<li>随机取出一个样本放入采样集合中，再把这个样本放回初始数据集，重复K次采样。最终获得一个大小为K的样本集合。</li>
+<li>同样的方法，可以采样出T个含K个样本的采样集合，然后基于每个采样集合训练出一个基学习器，再将这些基学习器进行结合，就是Bagging的基本流程。</li>
 </ul>
-</li>
-<li>Beijing Institute of Technology (985), Sep.2012-Jun.2016<ul>
-<li>Bachelor in Computer Science and Technology , GPA 3.4/4.0</li>
-<li>Double degree in economics  </li>
-</ul>
-</li>
-</ul>
-<p><strong><font face="微软雅黑" color="#FF9900"> WORK EXPERIENCE </font></strong>   </p>
-<ul>
-<li>ChinaSatcom (full time)</li>
-<li>Face ++ (internship)</li>
-<li>JD(internship)</li>
-<li>Baidu(intership)</li>
-<li>NCI（intership）</li>
-</ul>
-<p><strong><font face="微软雅黑" color="#FF9900"> PROJECT EXPERIENCE </font></strong>  </p>
-<ul>
-<li>user behavior prediction in news recommendation scenarios</li>
-<li>text recommendation</li>
-<li>Chinese Pre-training Model generalization ability challenge</li>
-</ul>
-<p><strong><font face="微软雅黑" color="#FF9900"> SKILLS </font></strong>  </p>
-<ul>
-<li>Programming language ： familiar with Python、C++、Shell、SQL</li>
-<li>Professional framework ： familiar with tensorflow、sklearn、pandas、numpy，matplotlib，etc.</li>
-<li>Algorithm   <ul>
-<li>machine learning algorithms: familiar with LR、bayes、K-means、GBDT，etc.</li>
-<li>deep learning algorithms: CNN、RNN、LSTM etc.</li>
-<li>text processing: familiar with TF-IDF, word2vec, bert.</li>
-</ul>
-</li>
-</ul>
+<p>对于回归问题的预测是通过预测取平均值来进行的，对于分类问题的预测是通过预测取多数票预测来进行的。 Bagging方法之所以有效，是因为每个模型都是再略微不同的训练数据集上拟合完成的，这又使得每个基模型之间存在略微的差异，使每个基模型拥有略微不同的训练能力。<br>bagging同样是一种降低方差的技术，因此它在不剪枝决策树、神经网络等易受样本扰动的学习器上效果更将明显，在实际的使用中，加入列采样的Bagging技术对高维小样本往往有神奇的效果。</p>
+<p>行采样，列采样是随机森林、XGBoost等集成模型中常用的trick。主要作用是加快训练速度和防止过拟合。<br>随机森林：1）建树前对样本随机抽样（行采样）2）每个特征分裂随机采样生成特征候选集（列采样）3）根据增益公式选取最优分裂特征和对应特征分裂建树。建树过程完全独立。能够完全并行化。</p>
+<h2 id="bagging的案例分析"><a href="#bagging的案例分析" class="headerlink" title="bagging的案例分析"></a>bagging的案例分析</h2><p>Sklearn 提供了BaggingRegressor和BaggingClassifier两种Bagging方法的API，这两种方法的默认基模型是树模型。树一般指的是决策树，是一种树形结构，树的每个非叶子节点表示对样本在一个特征上的判断，节点下方的分支代表对样本的划分。决策树的建立过程是对一个数据不断划分的过程，每次划分中，首先要选择用于划分的特征，之后要确定划分的方案（类别/阈值）。我们希望通过划分，决策树的分支节点所包含的样本“纯度”尽可能高，节点划分过程中所用的指标主要是<font color="red">信息增益</font>和<font color="red">GINI系数</font>  </p>
+<h3 id="决策树分裂"><a href="#决策树分裂" class="headerlink" title="决策树分裂"></a>决策树分裂</h3><p>信息增益： 衡量的是划分前后不确定性程度的减小，信息不确定程度一般使用信息熵来度量，计算方式是：<br>[x = {-b \pm \sqrt{b^2-4ac} \over 2a}.]</p>
 
                 
             </div>
@@ -539,7 +513,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://jiaqiizhou.github.io/2021/04/09/hello-world/">http://jiaqiizhou.github.io/2021/04/09/hello-world/</a>
+                    <a href="http://jiaqiizhou.github.io/2021/04/16/bagging/">http://jiaqiizhou.github.io/2021/04/16/bagging/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -577,8 +551,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/JIAQI-ZHOU/">
-                                    <span class="chip bg-color">JIAQI ZHOU</span>
+                                <a href="/tags/DataWhale/">
+                                    <span class="chip bg-color">DataWhale</span>
+                                </a>
+                            
+                                <a href="/tags/ensemble/">
+                                    <span class="chip bg-color">ensemble</span>
                                 </a>
                             
                         </div>
@@ -748,17 +726,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2021/04/14/voting/">
+                <a href="/2021/04/16/bagging/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="集成学习-投票法">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="集成学习-bagging">
                         
-                        <span class="card-title">集成学习-投票法</span>
+                        <span class="card-title">集成学习-bagging</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -768,9 +747,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-14
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-16
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -779,6 +758,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -798,16 +778,16 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2021/04/09/hello-world/">
+                <a href="/2021/04/15/machine-learning/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="Zhou Jiaqi">
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="集成学习-投票法">
                         
-                        <span class="card-title">Zhou Jiaqi</span>
+                        <span class="card-title">集成学习-投票法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -818,7 +798,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-15
                             </span>
                         <span class="publish-author">
                             
@@ -828,12 +808,15 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/JIAQI-ZHOU/">
-                        <span class="chip bg-color">JIAQI ZHOU</span>
+                    <a href="/tags/DataWhale/">
+                        <span class="chip bg-color">DataWhale</span>
+                    </a>
+                    
+                    <a href="/tags/ensemble/">
+                        <span class="chip bg-color">ensemble</span>
                     </a>
                     
                 </div>
