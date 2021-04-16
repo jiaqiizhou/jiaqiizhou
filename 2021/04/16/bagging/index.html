@@ -486,7 +486,7 @@
 <p>对于回归问题的预测是通过预测取平均值来进行的，对于分类问题的预测是通过预测取多数票预测来进行的。 Bagging方法之所以有效，是因为每个模型都是再略微不同的训练数据集上拟合完成的，这又使得每个基模型之间存在略微的差异，使每个基模型拥有略微不同的训练能力。<br>bagging同样是一种降低方差的技术，因此它在不剪枝决策树、神经网络等易受样本扰动的学习器上效果更将明显，在实际的使用中，加入列采样的Bagging技术对高维小样本往往有神奇的效果。</p>
 <p>行采样，列采样是随机森林、XGBoost等集成模型中常用的trick。主要作用是加快训练速度和防止过拟合。<br>随机森林：1）建树前对样本随机抽样（行采样）2）每个特征分裂随机采样生成特征候选集（列采样）3）根据增益公式选取最优分裂特征和对应特征分裂建树。建树过程完全独立。能够完全并行化。</p>
 <h2 id="bagging的案例分析"><a href="#bagging的案例分析" class="headerlink" title="bagging的案例分析"></a>bagging的案例分析</h2><p>Sklearn 提供了BaggingRegressor和BaggingClassifier两种Bagging方法的API，这两种方法的默认基模型是树模型。树一般指的是决策树，是一种树形结构，树的每个非叶子节点表示对样本在一个特征上的判断，节点下方的分支代表对样本的划分。决策树的建立过程是对一个数据不断划分的过程，每次划分中，首先要选择用于划分的特征，之后要确定划分的方案（类别/阈值）。我们希望通过划分，决策树的分支节点所包含的样本“纯度”尽可能高，节点划分过程中所用的指标主要是<font color="red">信息增益</font>和<font color="red">GINI系数</font>  </p>
-<h3 id="决策树分裂"><a href="#决策树分裂" class="headerlink" title="决策树分裂"></a>决策树分裂</h3><p>信息增益： 衡量的是划分前后不确定性程度的减小，信息不确定程度一般使用信息熵来度量，计算方式是：<br>$H(Y) = -\sum{p_{i}logp_{i}}$<br>i表示样本的标签，p表示该样本出现的概率，当我们对样本进行划分之后，计算样本的条件熵：<br>$H(Y|X) = -\sum_{x \in X}{p(X = x)H(Y|X = x)}$<br>其中X表示用于划分特征的取值。信息增益定义为信息熵与条件熵的差值：<br>$IG = H(Y) - H(Y|X)<br>信息增益IG越大，说明使用该特征划分数据所获得的信息量变化越大，子节点的样本”纯度“越高。<br>同样，也可以利用Gini指数来衡量数据的不纯度，计算方法 $Gini = 1 - \sum p_{i}^{2}$<br>对样本做出划分后，计算划分后的Gini指数 $Gini_{x} = \sum_{x \in X}p(X = x)[1 - \sum p_{i}^2]$<br>选择使得划分后Gini指数最小的特征。</p>
+<h3 id="决策树分裂"><a href="#决策树分裂" class="headerlink" title="决策树分裂"></a>决策树分裂</h3><p>信息增益： 衡量的是划分前后不确定性程度的减小，信息不确定程度一般使用信息熵来度量，计算方式是：<br>$H(Y) = -\sum{p_{i}logp_{i}}$<br>i表示样本的标签，p表示该样本出现的概率，当我们对样本进行划分之后，计算样本的条件熵：<br>$H(Y|X) = -\sum_{x \in X}{p(X = x)H(Y|X = x)}$<br>其中X表示用于划分特征的取值。信息增益定义为信息熵与条件熵的差值：<br>$IG = H(Y) - H(Y|X)$<br>信息增益IG越大，说明使用该特征划分数据所获得的信息量变化越大，子节点的样本”纯度“越高。<br>同样，也可以利用Gini指数来衡量数据的不纯度，计算方法 $Gini = 1 - \sum p_{i}^{2}$<br>对样本做出划分后，计算划分后的Gini指数 $Gini_{x} = \sum_{x \in X}p(X = x)[1 - \sum p_{i}^2]$<br>选择使得划分后Gini指数最小的特征。</p>
 <h4 id="分裂举例"><a href="#分裂举例" class="headerlink" title="分裂举例"></a>分裂举例</h4><p><img src="/2021/04/16/bagging/%E5%86%B3%E7%AD%96%E6%A0%91.jpg" alt="决策树"></p>
 <p>根据天气、温度和风力等级判断是否打网球：首先通过计算信息增益 or Gini指数确定首先根据天气情况对样本进行划分，之后对于每个分支，继续考虑除天气之外的其他特征，直到样本的类型被完全分开，所有特征都已使用，或达到树的最大深度为止。<br>Bagging的一个典型应用是随机森林，”森林“是许多树bagging组成，具体实现上，用于每个决策树训练的样本和构建决策树的特征都是通过随机采样得到的，RF的预测结果是多个决策树输出的组合（投票）</p>
 <p><img src="/2021/04/16/bagging/%E5%86%B3%E7%AD%96%E6%A0%91%E8%BF%87%E7%A8%8B.jpg" alt="决策树"></p>
@@ -516,9 +516,9 @@ n_scores <span class="token operator">=</span> cross_val_score<span class="token
 <li>If float, then draw max_features * X.shape[1] features.</li>
 </ul>
 </li>
-<li>bootstrap : bool, default=True<br>Whether samples are drawn with replacement. If False, sampling without replacement is performed.<h3 id="sklearn-datasets-make-classifsication"><a href="#sklearn-datasets-make-classifsication" class="headerlink" title=" sklearn.datasets.make_classifsication "></a><strong><font face="微软雅黑" size="3" color="#BA55D3"> sklearn.datasets.make_classifsication </font></strong></h3></li>
+<li>bootstrap : bool, default=True<br>Whether samples are drawn with replacement. If False, sampling without replacement is performed.  </li>
 </ul>
-<p>Generate a random n-class classification problem.<br>创建一个长度为2*class_sep 且边长为 2 * class_sep 的正态分布于n_informative-维超立方体的顶点的点簇（std =1），并为每个类分配相等数量的簇。<br>n_informative 特征， n_redundant 线性的信息特征组合，n_repeated 重复，从信息和冗余特征中随机替换。</p>
+<h3 id="sklearn-datasets-make-classifsication"><a href="#sklearn-datasets-make-classifsication" class="headerlink" title=" sklearn.datasets.make_classifsication "></a><strong><font face="微软雅黑" size="3" color="#BA55D3"> sklearn.datasets.make_classifsication </font></strong></h3><p>Generate a random n-class classification problem.<br>创建一个长度为2*class_sep 且边长为 2 * class_sep 的正态分布于n_informative-维超立方体的顶点的点簇（std =1），并为每个类分配相等数量的簇。<br>n_informative 特征， n_redundant 线性的信息特征组合，n_repeated 重复，从信息和冗余特征中随机替换。</p>
 <h4 id="Parameters-1"><a href="#Parameters-1" class="headerlink" title="Parameters"></a>Parameters</h4><ul>
 <li>n_samples: int, default = 100, the number of samples.</li>
 <li>n_features: int, default = 20, The total number of features. </li>
