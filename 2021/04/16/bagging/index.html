@@ -552,7 +552,7 @@ n_scores <span class="token operator">=</span> cross_val_score<span class="token
 <h3 id="sklearn-model-selection-cross-val-score"><a href="#sklearn-model-selection-cross-val-score" class="headerlink" title=" sklearn.model_selection.cross_val_score "></a><strong><font face="微软雅黑" size="3" color="#BA55D3"> sklearn.model_selection.cross_val_score </font></strong></h3><p>Evaluate a score by cross-validation</p>
 <h4 id="Parameters-3"><a href="#Parameters-3" class="headerlink" title="Parameters"></a>Parameters</h4><ul>
 <li>estimator：estimator object implementing ‘fit’.</li>
-<li>X: array-like of shape (n_samples, n_features).</li>
+<li>X: array-like of shape ( n_samples, n_features).</li>
 <li>y: array-like of shape (n_samples,) or (n_samples, n_outputs), default=None.</li>
 <li>groups: array-like of shape (n_samples,), default=None.</li>
 <li>scoring: str or callable, default=None.</li>
@@ -560,9 +560,11 @@ n_scores <span class="token operator">=</span> cross_val_score<span class="token
 <li>None, to use the default 5-fold cross validation</li>
 <li>int, to specify the number of folds in a (Stratified)KFold</li>
 <li>CV splitter</li>
-<li>An iterable yielding (train, test) splits as arrays of indices.<h4 id="Returns-1"><a href="#Returns-1" class="headerlink" title="Returns"></a>Returns</h4></li>
+<li>An iterable yielding (train, test) splits as arrays of indices.</li>
 </ul>
 </li>
+</ul>
+<h4 id="Returns-1"><a href="#Returns-1" class="headerlink" title="Returns"></a>Returns</h4><ul>
 <li>scores : ndarray of float of shape=(len(list(cv)),)<ul>
 <li>Array of scores of the estimator for each run of the cross validation.</li>
 </ul>
