@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="集成学习-bagging, WISEDOM, FREEDOM, RICH">
+    <meta name="keywords" content="智慧海洋-数据分析, WISEDOM, FREEDOM, RICH">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>集成学习-bagging | jiaqi.z&#39;s Blogs</title>
+    <title>智慧海洋-数据分析 | jiaqi.z&#39;s Blogs</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -312,12 +312,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">集成学习-bagging</h1>
+                    <h1 class="description center-align post-title">智慧海洋-数据分析</h1>
                 </div>
             </div>
         </div>
@@ -437,8 +437,12 @@
                                 <span class="chip bg-color">DataWhale</span>
                             </a>
                         
-                            <a href="/tags/ensemble/">
-                                <span class="chip bg-color">ensemble</span>
+                            <a href="/tags/AIS/">
+                                <span class="chip bg-color">AIS</span>
+                            </a>
+                        
+                            <a href="/tags/EDA/">
+                                <span class="chip bg-color">EDA</span>
                             </a>
                         
                     </div>
@@ -453,7 +457,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-04-16
+                    2021-04-17
                 </div>
                 
 
@@ -477,100 +481,83 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>与投票法不同，Bagging不仅仅集成模型最后的预测结果，同时采用一定策略来影响基模型训练，保证基模型可以服从一定的假设。集成学习我们希望各个模型之间具有较大的差异性，而在实际操作中的模型往往是同质的，因此一个简单的思路是通过不同的采样增加模型的差异性。</p>
-<h2 id="bagging的原理分析"><a href="#bagging的原理分析" class="headerlink" title="bagging的原理分析"></a>bagging的原理分析</h2><p>bagging的核心在于<font color="red">自主采样（bootstrap）</font>，即有放回的从数据集中进行采样，也就是说，同样一个样本可能被多次进行采样。一个自主采样的例子是希望估计全国所有人口年龄的平均值，那么我们在全国所有人口中随机抽取不同的集合（这些集合可能存在交集），计算每个集合的平均值，然后将所有平均值的均值作为估计值。</p>
-<h3 id="bagging的基本流程"><a href="#bagging的基本流程" class="headerlink" title="bagging的基本流程"></a>bagging的基本流程</h3><ul>
-<li>随机取出一个样本放入采样集合中，再把这个样本放回初始数据集，重复K次采样。最终获得一个大小为K的样本集合。</li>
-<li>同样的方法，可以采样出T个含K个样本的采样集合，然后基于每个采样集合训练出一个基学习器，再将这些基学习器进行结合，就是Bagging的基本流程。</li>
+                <h3 id="数据分析的目的"><a href="#数据分析的目的" class="headerlink" title="数据分析的目的"></a>数据分析的目的</h3><ul>
+<li>EDA的主要价值在于熟悉整个数据集的基本情况(缺失值、异常值)，来确定所获得数据集可以用于接下来的机器学习或者深度学习使用。</li>
+<li>了解特征之间的相关性、分布，以及特征与预测值之间的关系。</li>
 </ul>
-<p>对于回归问题的预测是通过预测取平均值来进行的，对于分类问题的预测是通过预测取多数票预测来进行的。 Bagging方法之所以有效，是因为每个模型都是再略微不同的训练数据集上拟合完成的，这又使得每个基模型之间存在略微的差异，使每个基模型拥有略微不同的训练能力。<br>bagging同样是一种降低方差的技术，因此它在不剪枝决策树、神经网络等易受样本扰动的学习器上效果更将明显，在实际的使用中，加入列采样的Bagging技术对高维小样本往往有神奇的效果。</p>
-<p>行采样，列采样是随机森林、XGBoost等集成模型中常用的trick。主要作用是加快训练速度和防止过拟合。<br>随机森林：1）建树前对样本随机抽样（行采样）2）每个特征分裂随机采样生成特征候选集（列采样）3）根据增益公式选取最优分裂特征和对应特征分裂建树。建树过程完全独立。能够完全并行化。</p>
-<h2 id="bagging的案例分析"><a href="#bagging的案例分析" class="headerlink" title="bagging的案例分析"></a>bagging的案例分析</h2><p>Sklearn 提供了BaggingRegressor和BaggingClassifier两种Bagging方法的API，这两种方法的默认基模型是树模型。树一般指的是决策树，是一种树形结构，树的每个非叶子节点表示对样本在一个特征上的判断，节点下方的分支代表对样本的划分。决策树的建立过程是对一个数据不断划分的过程，每次划分中，首先要选择用于划分的特征，之后要确定划分的方案（类别/阈值）。我们希望通过划分，决策树的分支节点所包含的样本“纯度”尽可能高，节点划分过程中所用的指标主要是<font color="red">信息增益</font>和<font color="red">GINI系数</font>  </p>
-<h3 id="决策树分裂"><a href="#决策树分裂" class="headerlink" title="决策树分裂"></a>决策树分裂</h3><p>信息增益： 衡量的是划分前后不确定性程度的减小，信息不确定程度一般使用信息熵来度量，计算方式是：<br>$H(Y) = -\sum{p_{i}logp_{i}}$<br>i表示样本的标签，p表示该样本出现的概率，当我们对样本进行划分之后，计算样本的条件熵：<br>$H(Y|X) = -\sum_{x \in X}{p(X = x)H(Y|X = x)}$<br>其中X表示用于划分特征的取值。信息增益定义为信息熵与条件熵的差值：<br>$IG = H(Y) - H(Y|X)$<br>信息增益IG越大，说明使用该特征划分数据所获得的信息量变化越大，子节点的样本”纯度“越高。<br>同样，也可以利用Gini指数来衡量数据的不纯度，计算方法 $Gini = 1 - \sum p_{i}^{2}$<br>对样本做出划分后，计算划分后的Gini指数 $Gini_{x} = \sum_{x \in X}p(X = x)[1 - \sum p_{i}^2]$<br>选择使得划分后Gini指数最小的特征。</p>
-<h4 id="分裂举例"><a href="#分裂举例" class="headerlink" title="分裂举例"></a>分裂举例</h4><p><img src="/2021/04/16/bagging/%E5%86%B3%E7%AD%96%E6%A0%91.jpg" alt="决策树"></p>
-<p>根据天气、温度和风力等级判断是否打网球：首先通过计算信息增益 or Gini指数确定首先根据天气情况对样本进行划分，之后对于每个分支，继续考虑除天气之外的其他特征，直到样本的类型被完全分开，所有特征都已使用，或达到树的最大深度为止。<br>Bagging的一个典型应用是随机森林，”森林“是许多树bagging组成，具体实现上，用于每个决策树训练的样本和构建决策树的特征都是通过随机采样得到的，RF的预测结果是多个决策树输出的组合（投票）</p>
-<p><img src="/2021/04/16/bagging/%E5%86%B3%E7%AD%96%E6%A0%91%E8%BF%87%E7%A8%8B.jpg" alt="决策树"></p>
-<h3 id="sklearn-bagging-代码"><a href="#sklearn-bagging-代码" class="headerlink" title="sklearn bagging 代码"></a>sklearn bagging 代码</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>datasets <span class="token keyword">import</span> make_classification
-X<span class="token punctuation">,</span>y <span class="token operator">=</span> make_classification<span class="token punctuation">(</span>n_samples<span class="token operator">=</span><span class="token number">1000</span><span class="token punctuation">,</span> n_features<span class="token operator">=</span><span class="token number">20</span><span class="token punctuation">,</span> n_informative<span class="token operator">=</span><span class="token number">15</span><span class="token punctuation">,</span>n_redundant<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> random_state<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>X<span class="token punctuation">.</span>shape<span class="token punctuation">,</span>y<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
-
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span> cross_val_score
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>model_selection <span class="token keyword">import</span> RepeatedStratifiedKFold
-<span class="token keyword">from</span> sklearn<span class="token punctuation">.</span>ensemble <span class="token keyword">import</span> BaggingClassifier
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
-<span class="token comment"># define the model</span>
-model <span class="token operator">=</span> BaggingClassifier<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token comment"># evaluate the model</span>
-<span class="token comment"># 使用重复的分层k-fold交叉验证来评估模型，一共重复3次，每次有10个fold，</span>
-cv <span class="token operator">=</span> RepeatedStratifiedKFold<span class="token punctuation">(</span>n_splits <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span>n_repeats <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span> random_state <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span>
-n_scores <span class="token operator">=</span> cross_val_score<span class="token punctuation">(</span>model<span class="token punctuation">,</span> X<span class="token punctuation">,</span> y<span class="token punctuation">,</span> scoring <span class="token operator">=</span> <span class="token string">"accuracy"</span><span class="token punctuation">,</span> cv <span class="token operator">=</span> cv<span class="token punctuation">,</span> n_jobs <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> error_score <span class="token operator">=</span> <span class="token string">"raise"</span><span class="token punctuation">)</span>
-<span class="token comment"># report performance</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Accuracy : %.3f(%.3f)"</span><span class="token operator">%</span><span class="token punctuation">(</span>np<span class="token punctuation">.</span>mean<span class="token punctuation">(</span>n_scores<span class="token punctuation">)</span><span class="token punctuation">,</span> np<span class="token punctuation">.</span>std<span class="token punctuation">(</span>n_scores<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>(1000, 20) (1000,)<br>Accuracy : 0.858(0.034)</p>
-<h3 id="sklearn-ensemble-BaggingClassifier"><a href="#sklearn-ensemble-BaggingClassifier" class="headerlink" title=" sklearn.ensemble.BaggingClassifier "></a><strong><font face="微软雅黑" size="3" color="#BA55D3"> sklearn.ensemble.BaggingClassifier </font></strong></h3><h4 id="Parameters"><a href="#Parameters" class="headerlink" title="Parameters"></a>Parameters</h4><ul>
-<li>base_estimator : object, default=None<br>The base estimator to fit on random subsets of the dataset. If None, then the base estimator is a DecisionTreeClassifier.</li>
-<li>n_estimators : int, default=10<br>The number of base estimators in the ensemble.</li>
-<li>max_samples : int or float, default=1.0<br>The number of samples to draw from X to train each base estimator (with replacement by default, see bootstrap for more details).</li>
-<li>max_features : int or float, default=1.0<br>The number of features to draw from X to train each base estimator ( without replacement by default, see bootstrap_features for more details).<ul>
-<li>If int, then draw max_features features.</li>
-<li>If float, then draw max_features * X.shape[1] features.</li>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Load_Save_Data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>file_name<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>filename <span class="token operator">=</span> file_name
+    <span class="token keyword">def</span> <span class="token function">load_data</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>Path<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">:</span> 
+        <span class="token keyword">if</span> Path <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            <span class="token keyword">assert</span> self<span class="token punctuation">.</span>filename <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">,</span><span class="token string">"Invalid Path...."</span> 
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>filename <span class="token operator">=</span> Path
+        <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>filename<span class="token punctuation">,</span><span class="token string">"wb"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+            data <span class="token operator">=</span> pickle<span class="token punctuation">.</span>load<span class="token punctuation">(</span>f<span class="token punctuation">)</span> 
+        <span class="token keyword">return</span> data
+    <span class="token keyword">def</span> <span class="token function">save_data</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>data<span class="token punctuation">,</span>path<span class="token punctuation">)</span><span class="token punctuation">:</span> 
+        <span class="token keyword">if</span> path <span class="token keyword">is</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            <span class="token keyword">assert</span> self<span class="token punctuation">.</span>filename <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">,</span><span class="token string">"Invalid path...."</span> 
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>filename <span class="token operator">=</span> path
+        <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>filename<span class="token punctuation">,</span><span class="token string">"wb"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+            pickle<span class="token punctuation">.</span>dump<span class="token punctuation">(</span>data<span class="token punctuation">,</span>f<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 定义读取数据的函数</span>
+<span class="token keyword">def</span> <span class="token function">read_data</span><span class="token punctuation">(</span>Path<span class="token punctuation">,</span>Kind<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token triple-quoted-string string">"""
+    :param Path:待读取数据的存放路径 :param Kind:'train' of 'test' """</span>
+    <span class="token comment"># 替换成数据存放的路径</span>
+    filenames <span class="token operator">=</span> os<span class="token punctuation">.</span>listdir<span class="token punctuation">(</span>Path<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\n@Read Data From"</span><span class="token operator">+</span>Path<span class="token operator">+</span><span class="token string">"........................."</span><span class="token punctuation">)</span> <span class="token keyword">with</span> mp<span class="token punctuation">.</span>Pool<span class="token punctuation">(</span>processes<span class="token operator">=</span>mp<span class="token punctuation">.</span>cpu_count<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">as</span> pool<span class="token punctuation">:</span>
+        data_total <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span>tqdm<span class="token punctuation">(</span>pool<span class="token punctuation">.</span><span class="token builtin">map</span><span class="token punctuation">(</span>read_all_data<span class="token punctuation">.</span>read_train_file <span class="token keyword">if</span> Kind <span class="token operator">==</span> <span class="token string">"train"</span> <span class="token keyword">else</span> read_all_data<span class="token punctuation">.</span>read_test_file<span class="token punctuation">,</span>filenames<span class="token punctuation">)</span><span class="token punctuation">,</span>total<span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>filenames
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\n@End Read total Data............................"</span><span class="token punctuation">)</span> load_save <span class="token operator">=</span> Load_Save_Data<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> Kind <span class="token operator">==</span> <span class="token string">"train"</span><span class="token punctuation">:</span>
+    load_save<span class="token punctuation">.</span>save_data<span class="token punctuation">(</span>data_total<span class="token punctuation">,</span><span class="token string">"./data_tmp/total_data.pkl"</span><span class="token punctuation">)</span> <span class="token keyword">return</span> data_total<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 训练数据读取</span>
+<span class="token comment"># 存放数据的绝对路径</span>
+train_path <span class="token operator">=</span> <span class="token string">"D:/code_sea/data/train/hy_round1_train_20200102/"</span> data_train <span class="token operator">=</span> read_data<span class="token punctuation">(</span>train_path<span class="token punctuation">,</span>Kind<span class="token operator">=</span><span class="token string">"train"</span><span class="token punctuation">)</span>
+data_train <span class="token operator">=</span> pd<span class="token punctuation">.</span>concat<span class="token punctuation">(</span>data_train<span class="token punctuation">)</span>
+<span class="token comment"># 测试数据读取</span>
+<span class="token comment"># 存放数据的绝对路径</span>
+test_path <span class="token operator">=</span> <span class="token string">"D:/code_sea/data/test/hy_round1_testA_20200102/"</span> data_test <span class="token operator">=</span> read_data<span class="token punctuation">(</span>test_path<span class="token punctuation">,</span>Kind<span class="token operator">=</span><span class="token string">"test"</span><span class="token punctuation">)</span>
+data_test <span class="token operator">=</span> pd<span class="token punctuation">.</span>concat<span class="token punctuation">(</span>data_test<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="总体了解数据"><a href="#总体了解数据" class="headerlink" title="总体了解数据"></a>总体了解数据</h3><pre class="line-numbers language-python" data-language="python"><code class="language-python">data_test<span class="token punctuation">.</span>shape
+data_train<span class="token punctuation">.</span>shape
+data_train<span class="token punctuation">.</span>columns<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>查看一下具体的列名，赛题理解部分已经给出具体的特征含义，这里方便阅读再给一下</p>
+<ul>
+<li>渔船ID:渔船的唯一识别，结果文件以此ID为标识 </li>
+<li>x:渔船在平面坐标系下的x轴坐标 </li>
+<li>y:渔船在平面坐标系下的y轴坐标 </li>
+<li>速度:渔船当前时刻的航速，单位节 </li>
+<li>方向:渔船当前时刻的航首向，单位度 </li>
+<li>time:数据上报时刻，单位月日 时:分 </li>
+<li>type:渔船label，作业类型<pre class="line-numbers language-python" data-language="python"><code class="language-python">pd<span class="token punctuation">.</span>options<span class="token punctuation">.</span>display<span class="token punctuation">.</span>max_info_rows <span class="token operator">=</span> <span class="token number">2699639</span> 
+data_train<span class="token punctuation">.</span>info<span class="token punctuation">(</span>）<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">data_train<span class="token punctuation">.</span>describe<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0.01</span><span class="token punctuation">,</span><span class="token number">0.025</span><span class="token punctuation">,</span><span class="token number">0.05</span><span class="token punctuation">,</span><span class="token number">0.5</span><span class="token punctuation">,</span><span class="token number">0.75</span><span class="token punctuation">,</span><span class="token number">0.9</span><span class="token punctuation">,</span><span class="token number">0.99</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">data_train<span class="token punctuation">.</span>head<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>data_train<span class="token punctuation">.</span>tail<span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="查看数据集中特征缺失值、唯一值等"><a href="#查看数据集中特征缺失值、唯一值等" class="headerlink" title="查看数据集中特征缺失值、唯一值等"></a>查看数据集中特征缺失值、唯一值等</h3></li>
 </ul>
-</li>
-<li>bootstrap : bool, default=True<br>Whether samples are drawn with replacement. If False, sampling without replacement is performed.  </li>
-</ul>
-<h3 id="sklearn-datasets-make-classifsication"><a href="#sklearn-datasets-make-classifsication" class="headerlink" title=" sklearn.datasets.make_classifsication "></a><strong><font face="微软雅黑" size="3" color="#BA55D3"> sklearn.datasets.make_classifsication </font></strong></h3><p>Generate a random n-class classification problem.<br>创建一个长度为2*class_sep 且边长为 2 * class_sep 的正态分布于n_informative-维超立方体的顶点的点簇（std =1），并为每个类分配相等数量的簇。<br>n_informative 特征， n_redundant 线性的信息特征组合，n_repeated 重复，从信息和冗余特征中随机替换。</p>
-<h4 id="Parameters-1"><a href="#Parameters-1" class="headerlink" title="Parameters"></a>Parameters</h4><ul>
-<li>n_samples: int, default = 100, the number of samples.</li>
-<li>n_features: int, default = 20, The total number of features. </li>
-<li>n_informative:int， default = 2</li>
-<li>n_redundant:int， default = 2</li>
-<li>n_repeated:int， default = 0</li>
-<li>n_classes: int, default = 2</li>
-<li>n_cluster_per_class, int, default = 2</li>
-<li>weights: array-like of shape(n_classes, ) or (n_classes-1, ), default = None</li>
-<li>flip_y: float, default = 0.01</li>
-<li>class_sep：float, default = 1.0</li>
-<li>hypercube: bool, default = True</li>
-<li>shift:float, ndarray of shape (n_features,) or None, default=0.0</li>
-<li>scale: float, ndarray of shape (n_features,) or None, default=1.0</li>
-<li>shuffle: bool, default=True</li>
-<li>random_state: int, RandomState instance or None, default=None</li>
-</ul>
-<h4 id="Returns"><a href="#Returns" class="headerlink" title="Returns"></a>Returns</h4><ul>
-<li>X : ndarray of shape (n_samples, n_features)<br>  The generated samples</li>
-<li>y : ndarray of shape (n_samples)<br>  The integer labels for class membership of each sample.</li>
-</ul>
-<h3 id="sklearn-model-selection-RepeatedStratifiedKFold"><a href="#sklearn-model-selection-RepeatedStratifiedKFold" class="headerlink" title=" sklearn.model_selection.RepeatedStratifiedKFold "></a><strong><font face="微软雅黑" size="3" color="#BA55D3"> sklearn.model_selection.RepeatedStratifiedKFold </font></strong></h3><h4 id="为什么使用交叉验证（监督学习器性能评估方法）"><a href="#为什么使用交叉验证（监督学习器性能评估方法）" class="headerlink" title="为什么使用交叉验证（监督学习器性能评估方法）"></a>为什么使用交叉验证（监督学习器性能评估方法）</h4><p>一般情况下，我们将原始数据集分为训练数据集和验证数据集。防止训练过程中数据泄露，从训练数据集中划分出一部分数据，validation set（验证数据集），用来评估模型。最后再用测试集检验模型的泛化能力。<br>但是把原始数据集分割之后，用来训练模型的数据集大大减小，同时训练结果也更大的依赖于训练数据集和测试数据集占原始数据集的比重。 解决方法即 cross-validation 交叉检验，缩写cv。<br>k-fold cv的基本方法中，训练集被划分为k个较小的集合k-folds. 分别让一个fold作为测试集，余下部分作为训练集，进行k次训练，共计得到k个参数。最终使用均值作为最终的模型参数。  </p>
-<p><img src="/2021/04/16/bagging/cv.jpg" alt="交叉验证"></p>
-<p>缺点：相同大小的数据集，需要进行更多的运算。<br>优点：最大特点是不浪费validation set大小的数据，尤其是在样本集不够大的情况下。</p>
-<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">sklearn</span><span class="token punctuation">.</span>model_selection<span class="token punctuation">.</span>RepeatedStratifiedKFold<span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">,</span> n_splits<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">,</span> n_repeats<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">,</span> random_state<span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h4 id="Parameters-2"><a href="#Parameters-2" class="headerlink" title="Parameters"></a>Parameters</h4><ul>
-<li>n_splits : int, default=5, Number of folds. Must be at least 2.</li>
-<li>n_repeats : int, default=10, Number of times cross-validator needs to be repeated.</li>
-<li>random_state : int, RandomState instance or None, default=None</li>
-</ul>
-<h3 id="sklearn-model-selection-cross-val-score"><a href="#sklearn-model-selection-cross-val-score" class="headerlink" title=" sklearn.model_selection.cross_val_score "></a><strong><font face="微软雅黑" size="3" color="#BA55D3"> sklearn.model_selection.cross_val_score </font></strong></h3><p>Evaluate a score by cross-validation</p>
-<h4 id="Parameters-3"><a href="#Parameters-3" class="headerlink" title="Parameters"></a>Parameters</h4><ul>
-<li>estimator：estimator object implementing ‘fit’.</li>
-<li>X: array-like of shape ( n_samples, n_features).</li>
-<li>y: array-like of shape (n_samples,) or (n_samples, n_outputs), default=None.</li>
-<li>groups: array-like of shape (n_samples,), default=None.</li>
-<li>scoring: str or callable, default=None.</li>
-<li>cv: int, cross-validation generator or an iterable, default=None<ul>
-<li>None, to use the default 5-fold cross validation</li>
-<li>int, to specify the number of folds in a (Stratified)KFold</li>
-<li>CV splitter</li>
-<li>An iterable yielding (train, test) splits as arrays of indices.</li>
-</ul>
-</li>
-</ul>
-<h4 id="Returns-1"><a href="#Returns-1" class="headerlink" title="Returns"></a>Returns</h4><ul>
-<li>scores : ndarray of float of shape=(len(list(cv)),)<ul>
-<li>Array of scores of the estimator for each run of the cross validation.</li>
-</ul>
-</li>
-</ul>
-
+<h3 id="数据特性和特征分布"><a href="#数据特性和特征分布" class="headerlink" title="数据特性和特征分布"></a>数据特性和特征分布</h3><h4 id="三类渔船轨迹可视化"><a href="#三类渔船轨迹可视化" class="headerlink" title="三类渔船轨迹可视化"></a>三类渔船轨迹可视化</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 把训练集的所有数据,根据类别存放到不同的数据文件中</span>
+<span class="token keyword">def</span> <span class="token function">get_diff_data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    Path <span class="token operator">=</span> <span class="token string">"./data_tmp/total_data.pkl"</span> 
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>Path<span class="token punctuation">,</span><span class="token string">"rb"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        total_data <span class="token operator">=</span> pickle<span class="token punctuation">.</span>load<span class="token punctuation">(</span>f<span class="token punctuation">)</span> 
+    load_save <span class="token operator">=</span> Load_Save_Data<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    kind_data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"刺网"</span><span class="token punctuation">,</span><span class="token string">"围网"</span><span class="token punctuation">,</span><span class="token string">"拖网"</span><span class="token punctuation">]</span>
+    file_names <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">"ciwang_data.pkl"</span><span class="token punctuation">,</span><span class="token string">"weiwang_data.pkl"</span><span class="token punctuation">,</span><span class="token string">"tuowang_data.pkl"</span><span class="token punctuation">]</span> 
+    <span class="token keyword">for</span> i<span class="token punctuation">,</span>datax <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>kind_data<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        data_type <span class="token operator">=</span> <span class="token punctuation">[</span>data f o r data i n total_data i f data<span class="token punctuation">[</span><span class="token string">"type"</span><span class="token punctuation">]</span><span class="token punctuation">.</span>unique<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token operator">=</span> datax<span class="token punctuation">]</span> load_save<span class="token punctuation">.</span>save_data<span class="token punctuation">(</span>data_type<span class="token punctuation">,</span><span class="token string">"./data_tmp/"</span> <span class="token operator">+</span> file_names<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+get_diff_data<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># 从存放某个轨迹类别的数据文件中，随机读取某个渔船的数据</span>
+<span class="token keyword">def</span> <span class="token function">get_random_one_traj</span><span class="token punctuation">(</span><span class="token builtin">type</span><span class="token operator">=</span><span class="token boolean">None</span><span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token triple-quoted-string string">"""
+    :param type:"ciwang","weiwang" or "tuowang"
+    """</span>
+    np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>seed<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+    path <span class="token operator">=</span> <span class="token string">"./data_tmp/"</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>path <span class="token operator">+</span> <span class="token builtin">type</span> <span class="token operator">+</span> <span class="token string">".pkl"</span><span class="token punctuation">,</span><span class="token string">"rb"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f1<span class="token punctuation">:</span>
+        data <span class="token operator">=</span> pickle<span class="token punctuation">.</span>load<span class="token punctuation">(</span>f1<span class="token punctuation">)</span> length <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span>
+        index <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>choice<span class="token punctuation">(</span>length<span class="token punctuation">)</span> <span class="token keyword">return</span> data<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
@@ -596,7 +583,7 @@ n_scores <span class="token operator">=</span> cross_val_score<span class="token
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://jiaqiizhou.github.io/2021/04/16/bagging/">http://jiaqiizhou.github.io/2021/04/16/bagging/</a>
+                    <a href="http://jiaqiizhou.github.io/2021/04/17/eda/">http://jiaqiizhou.github.io/2021/04/17/eda/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -638,8 +625,12 @@ n_scores <span class="token operator">=</span> cross_val_score<span class="token
                                     <span class="chip bg-color">DataWhale</span>
                                 </a>
                             
-                                <a href="/tags/ensemble/">
-                                    <span class="chip bg-color">ensemble</span>
+                                <a href="/tags/AIS/">
+                                    <span class="chip bg-color">AIS</span>
+                                </a>
+                            
+                                <a href="/tags/EDA/">
+                                    <span class="chip bg-color">EDA</span>
                                 </a>
                             
                         </div>
@@ -809,9 +800,64 @@ n_scores <span class="token operator">=</span> cross_val_score<span class="token
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2021/04/17/eda/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="智慧海洋-数据分析">
+                        
+                        <span class="card-title">智慧海洋-数据分析</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-17
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Jiaqi Zhou
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/DataWhale/">
+                        <span class="chip bg-color">DataWhale</span>
+                    </a>
+                    
+                    <a href="/tags/AIS/">
+                        <span class="chip bg-color">AIS</span>
+                    </a>
+                    
+                    <a href="/tags/EDA/">
+                        <span class="chip bg-color">EDA</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2021/04/16/ais_data/">
                     <div class="card-image">
@@ -829,9 +875,9 @@ n_scores <span class="token operator">=</span> cross_val_score<span class="token
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-16
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-16
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -853,55 +899,6 @@ n_scores <span class="token operator">=</span> cross_val_score<span class="token
                     
                     <a href="/tags/GeoPandas/">
                         <span class="chip bg-color">GeoPandas</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/04/15/machine-learning/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="机器学习-基础">
-                        
-                        <span class="card-title">机器学习-基础</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-15
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            Jiaqi Zhou
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/DataWhale/">
-                        <span class="chip bg-color">DataWhale</span>
-                    </a>
-                    
-                    <a href="/tags/machine-learning/">
-                        <span class="chip bg-color">machine learning</span>
                     </a>
                     
                 </div>
@@ -1069,13 +1066,6 @@ n_scores <span class="token operator">=</span> cross_val_score<span class="token
 
 </main>
 
-
-<script src="https://cdn.bootcss.com/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
 
 
 
